@@ -43,17 +43,16 @@ tidyfeed <- function(feed, sf = TRUE, config = list()){
 
   doc <- try(httr::GET(feed, config), silent = TRUE)
 
+  if(unique(grepl('try-error', class(doc)))){
+    stop(msg)
+  }
+
   if(grepl("json", doc$headers$`content-type`)){
     result <- json_parse(feed)
     return(result)
   } else{
     doc <- doc %>% xml2::read_xml()
   }
-
-  if(unique(grepl('try-error', class(doc)))){
-    stop(msg)
-  }
-
 
   if(grepl("http://www.w3.org/2005/Atom", xml2::xml_attr(doc, "xmlns"))){
 
