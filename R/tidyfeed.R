@@ -76,9 +76,7 @@ tidyfeed <- function(feeds, sf = TRUE) {
 
   out <- curl::multi_run(pool = pool)
   print(unlist(out))
-  data.table::rbindlist(feedDF)
-#  })
- # })
+  data.table::rbindlist(feedDF, fill = TRUE)
 }
 
 last <- function(x) {
